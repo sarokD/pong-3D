@@ -8,8 +8,9 @@
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGHT = 800;
-constexpr glm::vec3 PADDLE_SCALE(1.5f, 1.0f, 0.3f);
-constexpr glm::vec3 BALL_SCALE(0.1f, 0.1f, 0.1f);
+constexpr glm::vec3 PADDLE_SCALE(1.5f, 0.3f, 1.0f);
+constexpr glm::vec3 BALL_SCALE(0.1f);
+constexpr glm::vec3 CAMERA_POS(0.0f, 0.0f, -8.0f);
 
 int main() {
     // setup GLFW and GLAD
@@ -123,25 +124,23 @@ int main() {
     paddleShader.set("projection", projection);
 
     glm::mat4 view = glm::lookAt(
-        glm::vec3(0.0f, 7.0f, 6.0f),
-        glm::vec3(0.0f),
-        glm::vec3(0.0f, 1.0f, 0.0f)
+        CAMERA_POS, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)
     );
     ballShader.use();
     ballShader.set("view", view);
 
     paddleShader.use();
     paddleShader.set("view", view);
-    paddleShader.set("viewPos", glm::vec3(0.0f, 7.0f, 6.0f));
+    paddleShader.set("viewPos", CAMERA_POS);
 
     // initialize structs
     Paddle player;
     player.scale = PADDLE_SCALE;
-    player.pos = glm::vec3(0.0f, 0.0f, 3.0f);
+    player.pos = glm::vec3(0.0f, 2.0f, 0.0f);
 
     Paddle enemy;
     enemy.scale = PADDLE_SCALE;
-    enemy.pos = glm::vec3(0.0f, 0.0f, -player.pos.z);
+    enemy.pos = glm::vec3(0.0f, -player.pos.y, 0.0f);
 
     Ball ball;
 
@@ -162,7 +161,7 @@ int main() {
         );
 
         float diff = ball.pos.x - enemy.pos.x;
-        enemy.move(diff < -0.05f, diff > 0.05f, dt);
+        enemy.move(diff > -0.05f, diff < 0.05f, dt);
 
         ball.move(player, enemy, dt);
 
