@@ -20,16 +20,21 @@ A simple 3-Dimensional pong game made with openGL and C++.
 git clone https://www.github.com/sarokD/pong-3D
 ```
 
-2. Change into the directory and compile with GNU make on your UNIX system (windows not yet supported).
+2. Change into the directory and compile with CMake (Makefile also available).
 ```bash
 cd pong-3D
-make all
+cmake --build build
 ```
 
-3. The executable should be created which you can now easily run.
-```bash
-make run
-```
+3. The executable should be created which you can now easily run.  
+    - UNIX (MacOS, GNU+linux, BSD):
+    ```bash
+    ./build/3d-pong
+    ```  
+    - Windows:
+    ```powershell
+    .\build\3d-pong
+    ```  
 
 ## License
 This Project is licensed under the **MIT License**
