@@ -1,8 +1,10 @@
 #include "paddle.hpp"
+#include <algorithm>
 
 void Paddle::move(bool moveLeft, bool moveRight, float dt) {
     if (moveLeft) pos.x += speed * dt;
     if (moveRight) pos.x -= speed * dt;
+    pos.x = std::clamp(pos.x, -3.0f, 3.0f);
 }
 
 void Paddle::draw(const Shader& shader, glm::vec3 color) {

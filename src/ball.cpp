@@ -26,13 +26,15 @@ void Ball::move(Paddle& player, Paddle& enemy, float dt) {
         if (std::abs(pos.x-player.pos.x) < player.scale.x/2.0f) {
             pos.y = playerFace;
            dir.y *= -1;
-        } else { reset(*this, player, enemy); }
+           dir.x = (pos.x-player.pos.x)/(player.scale.x/2.0f)*1.2f;
+        } else if (pos.y >= playerFace + player.scale.y) { reset(*this, player, enemy); }
     }
     if (pos.y <= enemyFace) {
         if (std::abs(pos.x-enemy.pos.x) < enemy.scale.x/2.0f) {
             pos.y = enemyFace;
             dir.y *= -1;
-        } else { reset(*this, player, enemy); }
+            dir.x = (pos.x-enemy.pos.x)/(enemy.scale.x/2.0f);
+        } else if (pos.y <= enemyFace - enemy.scale.y) { reset(*this, player, enemy); }
     }
 }
 

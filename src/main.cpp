@@ -8,7 +8,7 @@
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGHT = 800;
-constexpr glm::vec3 PADDLE_SCALE(1.5f, 0.3f, 1.0f);
+constexpr glm::vec3 PADDLE_SCALE(1.0f, 0.2f, 0.8f);
 constexpr glm::vec3 BALL_SCALE(0.1f);
 constexpr glm::vec3 CAMERA_POS(0.0f, 0.0f, -8.0f);
 
@@ -159,21 +159,21 @@ int main() {
             glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS, 
             glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS, dt
         );
-
-        float diff = ball.pos.x - enemy.pos.x;
-        enemy.move(diff > -0.05f, diff < 0.05f, dt);
+        if (ball.dir.y < 0) {
+            float diff = ball.pos.x - enemy.pos.x;
+            enemy.move(diff > -0.05f, diff < 0.05f, dt);
+        }
 
         ball.move(player, enemy, dt);
 
-
         // drawing
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // set light attributes
         paddleShader.use();
         paddleShader.set("light.pos", ball.pos);
-        paddleShader.set("light.color", glm::vec3(1.0f, 1.0f, 0.2f));
+        paddleShader.set("light.color", glm::vec3(1.0f));
 
         // draw player
         glBindVertexArray(paddleVAO);
@@ -193,7 +193,7 @@ int main() {
         // draw ball
         ballShader.use();
         glBindVertexArray(ballVAO);
-        ball.draw(ballShader, glm::vec3(1.0f, 1.0f, 0.2f));
+        ball.draw(ballShader, glm::vec3(1.0f));
 
         glfwSwapBuffers(window);
         glfwPollEvents();

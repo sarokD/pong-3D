@@ -31,7 +31,7 @@ cmake --build build
     ```bash
     ./build/3d-pong
     ```  
-    - Windows:
+    -  Windows:
     ```powershell
     .\build\3d-pong
     ```  
