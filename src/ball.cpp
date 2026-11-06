@@ -10,10 +10,10 @@ glm::vec3 Ball::randomDir() {
 }
 
 static void reset(Ball& ball, Paddle& player, Paddle& enemy) {
-    ball.pos = glm::vec3(0);
+    ball.pos = glm::vec3(0.0f);
     ball.dir = Ball::randomDir();
-    enemy.pos.x = 0;
-    player.pos.x = 0;
+    enemy.pos.x = 0.0f;
+    player.pos.x = 0.0f;
 }
 
 void Ball::move(Paddle& player, Paddle& enemy, float dt) {
