@@ -13,7 +13,6 @@ void Paddle::draw(const Shader& shader, glm::vec3 color) {
     model = glm::scale(model, scale);
     shader.set("model", model);
 
-    // uniform vec3 color;
     shader.set("color", color);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
