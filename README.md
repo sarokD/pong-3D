@@ -13,6 +13,12 @@ A simple 3-Dimensional pong game made with openGL and C++.
 | A | Move left |
 | D | Move right |
 
+## Requirements
+- Git
+- OpenGL
+- GLFW
+- C++ Compiler (C++17, `#pragma once` support)
+
 
 ## Compile and run
 1. Download the repository from Github.
