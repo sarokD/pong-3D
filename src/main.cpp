@@ -29,10 +29,10 @@ constexpr Material RED_RUBBER = {
 int main() {
     // setup GLFW and GLAD
     if (!glfwInit()) {
+        glfwTerminate();
         std::cerr << "Error initializing GLFW\n";
         return 1;
     }
-    atexit([](){glfwTerminate();});
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -45,12 +45,16 @@ int main() {
     GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "3D Pong", nullptr, nullptr);
     if (!window) {
         std::cerr << "Error creating GLFW window\n";
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
         std::cerr << "Error initializing GLAD\n";
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -207,5 +211,10 @@ int main() {
         glfwPollEvents();
     }
 
+    glDeleteVertexArrays(1, &paddleVAO);
+    glDeleteVertexArrays(2, &ballVAO);
+    glDeleteBuffers(1, &VBO);
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return 0;
 }
