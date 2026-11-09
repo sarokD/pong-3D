@@ -5,12 +5,26 @@
 #include "shader.hpp"
 #include "paddle.hpp"
 #include "ball.hpp"
+#include "material.hpp"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGHT = 800;
 constexpr glm::vec3 PADDLE_SCALE(1.0f, 0.2f, 0.8f);
 constexpr glm::vec3 BALL_SCALE(0.1f);
 constexpr glm::vec3 CAMERA_POS(0.0f, 0.0f, -8.0f);
+constexpr Material GREEN_RUBBER = {
+    .ambient = glm::vec3(0.0f, 0.05f, 0.0f),
+    .diffuse = glm::vec3(0.4f, 0.7f, 0.4f),
+    .specular = glm::vec3(0.04f, 0.7f, 0.04f),
+    .shininess = 0.078125f * 128,
+};
+constexpr Material RED_RUBBER = {
+    .ambient =  glm::vec3(0.05f, 0.0f, 0.0f),
+    .diffuse = glm::vec3(0.7f, 0.4f, 0.4f),
+    .specular = glm::vec3(0.7f, 0.04f, 0.04f),
+    .shininess = 0.078125f * 128,
+};
+
 
 int main() {
     // setup GLFW and GLAD
@@ -177,18 +191,12 @@ int main() {
 
         // draw player
         glBindVertexArray(paddleVAO);
-        paddleShader.set("material.ambient", glm::vec3(0.0f, 0.05f, 0.0f));
-        paddleShader.set("material.diffuse", glm::vec3(0.4f, 0.7f, 0.4f));
-        paddleShader.set("material.specular", glm::vec3(0.04f, 0.7f, 0.04f));
-        paddleShader.set("material.shininess", 0.078125f);
-        player.draw(paddleShader, glm::vec3(0.1f, 1.0f, 0.2f));
+        paddleShader.set("material", GREEN_RUBBER);
+        player.draw(paddleShader, glm::vec3(0.0f, 1.0f, 0.0f));
 
         // draw enemy
-        paddleShader.set("material.ambient", glm::vec3(0.05f, 0.0f, 0.0f));
-        paddleShader.set("material.diffuse", glm::vec3(0.7f, 0.4f, 0.4f));
-        paddleShader.set("material.specular", glm::vec3(0.7f, 0.04f, 0.04f));
-        paddleShader.set("material.shininess", 0.078125f);
-        enemy.draw(paddleShader, glm::vec3(1.0f, 0.1f, 0.2f));
+        paddleShader.set("material", RED_RUBBER);
+        enemy.draw(paddleShader, glm::vec3(1.0f, 0.0f, 0.0f));
 
         // draw ball
         ballShader.use();

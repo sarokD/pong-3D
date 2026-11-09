@@ -22,7 +22,7 @@ uniform vec3 viewPos;
 
 void main() {
     float distance = length(light.pos - FragPos);
-    float attenuation = 1.0 / (1.0 + 0.22 * distance + 0.20 * (distance * distance));
+    float attenuation = 1.0 / (1.0 + 0.14 * distance + 0.07 * (distance * distance));
 
     vec3 ambient = light.color * material.ambient;
 

@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "material.hpp"
 
 struct Shader {
     unsigned int ID;
@@ -92,5 +93,12 @@ struct Shader {
 
     void set(const std::string& name, const glm::mat4& value) const
     { glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &value[0][0]); }
+
+    void set(const std::string& name, const Material value) const {
+        set(name+".ambient", value.ambient);
+        set(name+".diffuse", value.diffuse);
+        set(name+".specular", value.specular);
+        set(name+".shininess", value.shininess);
+    }
 
 };
